@@ -31,8 +31,9 @@ export function* userLoginSaga(action) {
         JSON.stringify(response.data.data)
       );
       yield put(userloginSuccess(response.data.data));
+      toast.success("Admin login successful")
       setTimeout(() => {
-        navigate("/admin-dashboard");
+        navigate("/dashboard");
       }, 3000);
     } else {
       setDisable(false);
