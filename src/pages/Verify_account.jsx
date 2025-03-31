@@ -8,13 +8,13 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import Layout from "../component/Loginheader";
+import Loginheader from "../component/Loginheader";
 
 export default function Otp_verification() {
 
     return (
         <>
-          <Layout />
+          <Loginheader />
           <section className="signup-sec" id="sign_up">
             <Container>
               <Row>
