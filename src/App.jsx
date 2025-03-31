@@ -3,6 +3,7 @@ import "./App.css";
 import ScrollToTop from "./component/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
+import Verify from "./pages/Verify_account";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<HomePage />} /> */}
           <Route path="/" element={<Login />} />
+          <Route path="/verify-otp" element={<Verify />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
