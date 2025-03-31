@@ -21,7 +21,7 @@ export function* userLoginSaga(action) {
   yield put(userLoginStart());
   const { payload, navigate, setDisable } = action.payload;
   try {
-    const response = yield axiosMain.post(`/broker`, payload);
+    const response = yield axiosMain.post(`/admin/verify`, payload);
     if (response?.data.status) {
       sessionStorage.setItem("jwt", "enable");
       yield call(setItemToLocalStorage, "isAuthenticated", true);
@@ -31,20 +31,9 @@ export function* userLoginSaga(action) {
         JSON.stringify(response.data.data)
       );
       yield put(userloginSuccess(response.data.data));
-      if (response.data.status === true) {
-        sessionStorage.setItem("jwt", "enable");
-        if (response.data.data.user_role === "admin") {
-          toast.success("Admin Login successful");
-          setTimeout(() => {
-            navigate("/admin-dashboard");
-          }, 3000);
-        } else {
-          toast.success("Broker login successful");
-          setTimeout(() => {
-            navigate("/dashboard");
-          }, 3000);
-        }
-      }
+      setTimeout(() => {
+        navigate("/admin-dashboard");
+      }, 3000);
     } else {
       setDisable(false);
       toast.error(response.data.message);

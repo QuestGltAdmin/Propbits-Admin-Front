@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import ScrollToTop from "./component/ScrollToTop";
-import { Login } from "./pages/Login";
 import { Toaster } from "react-hot-toast";
+import Login from "./pages/Login";
 
 function App() {
   return (

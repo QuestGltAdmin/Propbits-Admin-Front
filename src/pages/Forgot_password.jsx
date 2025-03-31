@@ -8,7 +8,7 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import Layout from "../Component/Loginheader";
+import Layout from "../component/Loginheader";
 
 
 

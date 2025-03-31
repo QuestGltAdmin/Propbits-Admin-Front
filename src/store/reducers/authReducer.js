@@ -85,8 +85,6 @@ const authSlice = createSlice({
 
     sellPropertyObj: (state, action) => {
       localStorage.setItem("sellData", JSON.stringify(action.payload));
-      console.log("action.payload", action.payload);
-
       return {
         ...state,
         sellData: action.payload,

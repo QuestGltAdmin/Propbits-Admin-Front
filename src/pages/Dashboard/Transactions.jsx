@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row, Table, Form, Pagination } from 'react-bootstrap'
-import Layout from '../../Component/Layout';
+import Layout from '../../component/Layout';
 
 
 const Transactions = () => {

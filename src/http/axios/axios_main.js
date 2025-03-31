@@ -1,8 +1,7 @@
 import axios from "axios";
-const BaseUrl = import.meta.env.VITE_BASEURL;
 
 const axiosMain = axios.create({
-  baseURL: BaseUrl,
+  baseURL: "https://ellington.donative.in:3005/",
   headers: {
     "Content-Type": "application/json",
   },
