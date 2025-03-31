@@ -4,7 +4,7 @@ import { Col, Container, Row, Table, Form, Pagination } from 'react-bootstrap'
 import Layout from '../../component/Layout';
 
 
-const Transactions = () => {
+const Properties = () => {
 
 
   return (
@@ -17,7 +17,7 @@ const Transactions = () => {
               <Col lg={12}>
                 <div className="dashboard-white-box">
                   <div className="w-100">
-                    <h2 className="inner-page-heading mb-2">All Transactions</h2>
+                    <h2 className="inner-page-heading mb-2">All Properties</h2>
                    
                     <Row>
                       <Col>
@@ -133,4 +133,4 @@ const Transactions = () => {
   )
 }
 
-export default Transactions
+export default Properties

@@ -4,6 +4,9 @@ import ScrollToTop from "./component/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
 import Verify from "./pages/Verify_account";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Properties from "./pages/Dashboard/Properties";
+import Profile from "./pages/Dashboard/Profile";
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
           {/* <Route path="/" element={<HomePage />} /> */}
           <Route path="/" element={<Login />} />
           <Route path="/verify-otp" element={<Verify />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/properties" element={<Properties />} />
+          <Route path="/Profile" element={<Profile />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

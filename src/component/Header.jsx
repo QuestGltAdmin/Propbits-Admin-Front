@@ -28,11 +28,9 @@ export default function Header() {
                       <Nav.Link href="/Dashboard">
                         <i className="fa fa-th-large"></i> Dashboard
                       </Nav.Link>
-                      <Nav.Link href="">
-                        <i className="fa fa-money"></i> Buy Coin
-                      </Nav.Link>
+                    
                       <Nav.Link href="/Transactions">
-                        <i className="fa fa-exchange"></i> Transactions
+                        <i className="fa fa-exchange"></i> Properties
                       </Nav.Link>
                       <Nav.Link href="/Profile">
                         <i className="fa fa-user"></i> Profile
@@ -56,10 +54,10 @@ export default function Header() {
                   </Navbar.Collapse>
 
                   <Link to="/" className="ms-auto profile-dropdown">
-                    <img src="assets/img/logo.png" /> GTH4536675...
+                    <img src="assets/img/logo.png" />
                   </Link>
                   <Link to="/" className="border-btn">
-                    Logout <i className="fa fa-sign-out"></i>
+                    Logout <i className="fa fa-sign-out ms-2"></i>
                   </Link>
                   <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 </div>
