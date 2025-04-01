@@ -15,7 +15,7 @@ import {
 import "react-range-slider-input/dist/style.css";
 import Slider from "react-slick";
 import Layout from "../../component/Layout";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axiosMain from "../../http/axios/axios_main";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -23,13 +23,15 @@ import toast from "react-hot-toast";
 const ProductDetail = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
+  const navigate = useNavigate()
   const [showImages, setShowImages] = useState(false);
   const [id, setId] = useState(searchParams.get("id") || "");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const mainSlider = useRef(null); // Reference for the main image slider
   const [imageArray, setImageArray] = useState([]);
-  const [modelForReject, setModelForReject] = useState(true);
-  const [modelForApprove, setModelForApprove] = useState(true);
+  const [modelForReject, setModelForReject] = useState(false);
+  const [modelForApprove, setModelForApprove] = useState(false);
+  const [showData, setShowData] = useState(false);
   const [inputReason, setInputReason] = useState("");
   const [disable, setDisable] = useState(false);
   const HandleCloseReject = () => {
@@ -141,7 +143,10 @@ const ProductDetail = () => {
         if (submitData?.data?.status) {
           setDisable(false);
           toast?.success("Property rejected successfully");
-          HandleCloseReject();
+          setTimeout(() => {
+            navigate("/manage-property-listing")
+            HandleCloseReject();
+          }, 3000);
         }
       } catch (err) {
         setDisable(false);
@@ -164,7 +169,11 @@ const ProductDetail = () => {
       if (submitData?.data?.status) {
         setDisable(false);
         toast?.success("Property approved successfully");
-        HandleCloseApprove();
+        setTimeout(() => {
+          navigate("/manage-property-listing")
+          HandleCloseApprove();
+
+        }, 3000);
       }
     } catch (err) {
       setDisable(false);
@@ -268,8 +277,26 @@ const ProductDetail = () => {
                 </Col>
                 <Col md="4" xs="6">
                   <div>
-                     <button className="common-btn bg-green w-100">Approve</button>
-                    <button className="common-btn bg-red w-100">Reject</button>
+                    <button
+                      className="common-btn bg-green w-100"
+                      onClick={() => {
+                        if (!showData?.isApproved && !showData?.isRejected) {
+                          setModelForApprove(true);
+                        }
+                      }}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="common-btn bg-red w-100"
+                      onClick={() => {
+                        if (!showData?.isApproved && !showData?.isRejected) {
+                          setModelForReject(true);
+                        }
+                      }}
+                    >
+                      Reject
+                    </button>
                   </div>
                 </Col>
               </Row>
@@ -571,7 +598,6 @@ const ProductDetail = () => {
           </Modal.Body>
         </Modal>
 
-       
         <Modal
           show={modelForApprove}
           onHide={HandleCloseApprove}
