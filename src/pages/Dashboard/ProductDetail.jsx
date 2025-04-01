@@ -15,14 +15,103 @@ import {
 import "react-range-slider-input/dist/style.css";
 import Slider from "react-slick";
 import Layout from "../../component/Layout";
-
-
+import { useSearchParams } from "react-router-dom";
+import axiosMain from "../../http/axios/axios_main";
+import useAuth from "../../hooks/useAuth";
 
 const ProductDetail = () => {
- 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { user } = useAuth();
+  const [showImages, setShowImages] = useState(false);
+  const [id, setId] = useState(searchParams.get("id") || "");
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const mainSlider = useRef(null); // Reference for the main image slider
+  const [imageArray, setImageArray] = useState([]);
+  const mainSliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 1000,
+    fade: true,
+    slidesToShow: 1,
+    autoplay: true,
+    autoplaySpeed: 700,
+    slidesToScroll: 1,
+    pauseOnHover: false,
+    beforeChange: (current, next) => setSelectedIndex(next), // Update selected thumbnail index
+  };
+  const thumbnailSliderSettings = {
+    slidesToShow:
+      Object.values(imageArray)?.length >= 9
+        ? 9
+        : Object.values(imageArray)?.length,
+    dots: false,
+    arrows: false,
+    centerMode: Object.values(imageArray)?.length > 1, // Enable centerMode only if more than 1 image
+    focusOnSelect: true,
+    infinite: Object.values(imageArray)?.length > 1, // Enable infinite scroll only if more than 1 image
+    centerPadding: "0",
+    autoplay: true,
+    autoplaySpeed: 1000,
+    asNavFor: mainSlider.current,
+    pauseOnHover: false,
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: Math.min(7, Object?.values(imageArray)?.length),
+          infinite: Object.values(imageArray)?.length > 1,
+        },
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: Math.min(7, Object?.values(imageArray)?.length),
+          infinite: Object.values(imageArray)?.length > 1,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: Math.min(5, Object?.values(imageArray)?.length),
+          infinite: Object.values(imageArray)?.length > 1,
+        },
+      },
+      {
+        breakpoint: 519,
+        settings: {
+          slidesToShow: Math.min(3, Object?.values(imageArray)?.length),
+          infinite: Object.values(imageArray)?.length > 1,
+        },
+      },
+    ],
+  };
+
+  const handleCloseImages = () => {
+    setSelectedIndex(0);
+    setShowImages(false);
+  };
+  useEffect(() => {
+    if (id) {
+      getPropertyDetails();
+    }
+  }, [id]);
+  const getPropertyDetails = async () => {
+    try {
+      const getData = await axiosMain.get(`/property/one?id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${user?.token}`,
+        },
+      });
+      if (getData?.data?.status) {
+        console.log("getData" , getData);
+        
+        setShowData(getData?.data?.data);
+      }
+    } catch (err) {}
+  };
   return (
-  <>
-    
+    <>
       <Layout>
         <div className="product-banner">
           <Container>
@@ -35,21 +124,18 @@ const ProductDetail = () => {
                       className="img-fluid"
                       alt="location"
                     />
-                    12 palm jumerha Dubai 
-                    </p>
+                    12 palm jumerha Dubai
+                  </p>
                 </div>
               </Col>
             </Row>
             <Row className="mt-3 product-banner-images">
               <Col sm="8" className="d-flex align-items-stretch">
                 <div className="first-image w-100">
-                  <p>
-                  47,460,400 INR
-                  </p>
+                  <p>47,460,400 INR</p>
                   <img
                     src="assets/img/product/product-banner1.png"
                     className="img-fluid"
-                   
                   />
                 </div>
               </Col>
@@ -62,7 +148,6 @@ const ProductDetail = () => {
                           src="assets/img/product/product-banner2.png"
                           className="img-fluid"
                           alt=""
-                          
                         />
                       </div>
                     </Col>
@@ -72,7 +157,6 @@ const ProductDetail = () => {
                           src="assets/img/product/product-banner3.png"
                           className="img-fluid"
                           alt=""
-                         
                         />
                       </div>
                     </Col>
@@ -125,7 +209,7 @@ const ProductDetail = () => {
                   <div>
                     <div className="property-share-icons">
                       <a
-                       
+
                       // target="_blank"
                       // href={`tel:+${showAgentDetails?.country_code}${showAgentDetails?.mobile_no}`}
                       >
@@ -135,9 +219,7 @@ const ProductDetail = () => {
                           alt="phone"
                         />
                       </a>
-                      <a
-                       
-                      >
+                      <a>
                         <img
                           src="/assets/img/properties/whatsapp.png"
                           className="img-fluid"
@@ -145,7 +227,7 @@ const ProductDetail = () => {
                         />
                       </a>
                       <a
-                        
+
                       // target="_blank"
                       // href={`mailto:${showAgentDetails?.email}`}
                       >
@@ -156,12 +238,7 @@ const ProductDetail = () => {
                         />
                       </a>
                     </div>
-                    <button
-                      className="common-btn w-100"
-                     
-                    >
-                      Book a viewing
-                    </button>
+                    <button className="common-btn w-100">Book a viewing</button>
                   </div>
                 </Col>
               </Row>
@@ -263,9 +340,7 @@ const ProductDetail = () => {
                           />
                           Available from
                         </p>
-                        <p className="dark-color">
-                        lorem ipsum new changes
-                        </p>
+                        <p className="dark-color">lorem ipsum new changes</p>
                       </li>
                       <li>
                         <p className="light-color">
@@ -276,25 +351,21 @@ const ProductDetail = () => {
                           />
                           sqft
                         </p>
-                        <p className="dark-color">
-                        lorem ipsum new changes
-                        </p>
+                        <p className="dark-color">lorem ipsum new changes</p>
                       </li>
-                     
-                        <li>
-                          <p className="light-color">
-                            <img
-                              src="/assets/img/product/rental.png"
-                              className="img-fluid"
-                              alt="bedroom"
-                            />
-                            Rental Yield
-                          </p>
-                          <p className="dark-color">
-                             30%
-                          </p>
-                        </li>
-                      
+
+                      <li>
+                        <p className="light-color">
+                          <img
+                            src="/assets/img/product/rental.png"
+                            className="img-fluid"
+                            alt="bedroom"
+                          />
+                          Rental Yield
+                        </p>
+                        <p className="dark-color">30%</p>
+                      </li>
+
                       <li>
                         <p className="light-color">
                           <img
@@ -304,26 +375,20 @@ const ProductDetail = () => {
                           />
                           225/Sq.ft
                         </p>
-                        <p className="dark-color">
-                        lorem ipsum new changes
-                        </p>
+                        <p className="dark-color">lorem ipsum new changes</p>
                       </li>
-                     
-                        <li>
-                          <p className="light-color">
-                            <img
-                              src="/assets/img/product/capital.png"
-                              className="img-fluid"
-                              alt="bedroom"
-                            />
-                            Capital Appreciation
-                          </p>
-                          <p className="dark-color m-2">
-                            
-                            40%
-                          </p>
-                        </li>
-                     
+
+                      <li>
+                        <p className="light-color">
+                          <img
+                            src="/assets/img/product/capital.png"
+                            className="img-fluid"
+                            alt="bedroom"
+                          />
+                          Capital Appreciation
+                        </p>
+                        <p className="dark-color m-2">40%</p>
+                      </li>
                     </ul>
 
                     <ul className="breadcrumb view-sec">
@@ -338,31 +403,24 @@ const ProductDetail = () => {
                       </li> */}
                     </ul>
 
-                    <div className="site-details">
-                    lorem ipsum new changes
-                    </div>
+                    <div className="site-details">lorem ipsum new changes</div>
 
                     <div className="amenities-sec">
                       <h3 className="feature-head">Feature / Amenities</h3>
                       <ul>
-                              <li>
-                                <div>
-                                  <img
-                                    src=""
-                                    className="img-fluid"
-                                    alt="feature"
-                                  />
-                                  <p>lorem ipsum new changes</p>
-                                </div>
-                              </li>
-                        
+                        <li>
+                          <div>
+                            <img src="" className="img-fluid" alt="feature" />
+                            <p>lorem ipsum new changes</p>
+                          </div>
+                        </li>
                       </ul>
                     </div>
                   </div>
                 </Col>
                 <Col md="4">
                   <div className="map-box">
-                  <iframe
+                    <iframe
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7220.3424470099835!2d55.274348040869334!3d25.197447618821002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f682829c85c07%3A0xa5eda9fb3c93b69d!2sDubai%20Mall!5e0!3m2!1sen!2sin!4v1732095707860!5m2!1sen!2sin"
                       width="600"
                       height="450"
@@ -371,22 +429,61 @@ const ProductDetail = () => {
                       loading="lazy"
                       referrerpolicy="no-referrer-when-downgrade"
                     ></iframe>
-                    
                   </div>
-                  <div>
-                  </div>
+                  <div></div>
                 </Col>
               </Row>
             </div>
           </Container>
         </div>
+        <Modal
+          show={showImages}
+          onHide={handleCloseImages}
+          size="lg"
+          centered
+          className="login-modal property-agent-modal product-details-slider-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <Slider
+                className="main-slick-slider"
+                {...mainSliderSettings}
+                ref={mainSlider}
+                asNavFor={mainSlider.current} // Synchronize both sliders
+              >
+                {Object?.values(imageArray)?.map((image, index) => {
+                  return (
+                    <div key={index}>
+                      <img src={image} alt={`Slide ${index}`} />
+                    </div>
+                  );
+                })}
+              </Slider>
 
-       
-        
-
-     
-
-      
+              {/* Thumbnails Slider */}
+              <Slider className="thumbnail-slider" {...thumbnailSliderSettings}>
+                {Object?.values(imageArray)?.map((image, index) => (
+                  <div
+                    className="items"
+                    key={index}
+                    onClick={() => mainSlider.current.slickGoTo(index)}
+                  >
+                    <img
+                      src={image}
+                      alt={`Thumbnail ${index}`}
+                      className={
+                        selectedIndex === index ? "active-thumbnail" : ""
+                      }
+                    />
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          </Modal.Body>
+        </Modal>
       </Layout>
     </>
   );

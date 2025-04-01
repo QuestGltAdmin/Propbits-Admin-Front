@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Breadcrumb,
   Col,
@@ -6,6 +6,7 @@ import {
   Dropdown,
   Form,
   InputGroup,
+  Modal,
   Nav,
   OverlayTrigger,
   Pagination,
@@ -19,9 +20,12 @@ import Layout from "../../component/Layout";
 import axiosMain from "../../http/axios/axios_main";
 import { debounce } from "lodash";
 import useAuth from "../../hooks/useAuth";
+import { IphoneSpinner } from "../../component/IphoneSpinner";
+import { useNavigate } from "react-router-dom";
 
 export const ManagePropertyListing = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   var prpertyslider = {
     dots: true,
     infinite: true,
@@ -36,6 +40,7 @@ export const ManagePropertyListing = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("pending");
   const [checkForCount, setCheckForCount] = useState(0);
+
 
   //===============================Get property Data===============================//
   const getPropertyList = async (pageNumberAll, search, filter) => {
@@ -148,7 +153,7 @@ export const ManagePropertyListing = () => {
                           value={search}
                         />
                       </InputGroup>
-                      <Dropdown className="buy-dropdown city-dropdown ">
+                      {/* <Dropdown className="buy-dropdown city-dropdown ">
                         <Dropdown.Toggle>
                           <span>
                             {" "}
@@ -166,7 +171,7 @@ export const ManagePropertyListing = () => {
                           <Dropdown.Item href="">Disable</Dropdown.Item>
                           <Dropdown.Item href="">Disable</Dropdown.Item>
                         </Dropdown.Menu>
-                      </Dropdown>
+                      </Dropdown> */}
                     </div>
                   </div>
                   {checkForCount == 1 &&
@@ -209,7 +214,14 @@ export const ManagePropertyListing = () => {
                                   </span>
                                 </div> */}
                               </div>
-                              <div className="porperty-main-details">
+                              <div
+                                className="porperty-main-details"
+                                onClick={() => {
+                                  navigate(
+                                    `/Property-details?id=${items?._id}`
+                                  );
+                                }}
+                              >
                                 <h4>{items?.title}</h4>
                                 <h3>{items?.appartment}</h3>
                                 <div className="aminity">
@@ -218,21 +230,21 @@ export const ManagePropertyListing = () => {
                                       src="assets/img/properties/bed.png"
                                       alt=""
                                     />{" "}
-                                    1 Bedroom
+                                    {items?.rooms} Bedroom
                                   </span>
-                                  <span>
+                                  {/* <span>
                                     <img
                                       src="assets/img/properties/bathtub.png"
                                       alt=""
                                     />{" "}
                                     2 Bathroom
-                                  </span>
+                                  </span> */}
                                   <span>
                                     <img
                                       src="assets/img/properties/aspect_ratio.png"
                                       alt=""
                                     />{" "}
-                                    sqft
+                                    {items?.sizeInSqFeet} sqft
                                   </span>
                                 </div>
                                 <p className="address-line">
@@ -240,16 +252,17 @@ export const ManagePropertyListing = () => {
                                     src="assets/img/properties/location.png"
                                     alt=""
                                   />{" "}
-                              {items?.houseNo} {items?.area} {items?.city} {items?.state} {items?.country}
+                                  {items?.houseNo} {items?.area} {items?.city}{" "}
+                                  {items?.state} {items?.country}
                                 </p>
-                                <div className="type-property">
+                                {/* <div className="type-property">
                                   <span className="ps-0">Lake view</span>
                                   <span>Luxury</span>
                                   <span>New</span>
-                                </div>
-                                <div className="list-time">
+                                </div> */}
+                                {/* <div className="list-time">
                                   Listed 3 months ago
-                                  {/* <div>
+                                  <div>
                                     <a href="">
                                       <img
                                         src="assets/img/properties/favorite.png"
@@ -262,12 +275,12 @@ export const ManagePropertyListing = () => {
                                         alt=""
                                       />
                                     </a>
-                                  </div> */}
-                                </div>
+                                  </div>
+                                </div> */}
                               </div>
                             </div>
                             <div className="rating-box-prop">
-                              <h2>4.5</h2>
+                              <h2>{items?.averageRatings}</h2>
                               <div className="rating-box">
                                 <img
                                   src="assets/img/properties/star.png"
@@ -290,29 +303,48 @@ export const ManagePropertyListing = () => {
                                   alt=""
                                 />
                               </div>
-                              <p>Rated by Reve</p>
+                              {/* <p>Rated by Reve</p> */}
                               <div className="rental-percent">
-                                <span>Rental yield : 50%</span>{" "}
+                                <span>Net Yield : {items?.netYield}%</span>{" "}
                                 <img
                                   src="assets/img/properties/arrow_circle_up.png"
                                   alt=""
                                 />
                               </div>
                               <div className="rental-percent">
-                                <span>Capital gain : 50%</span>{" "}
+                                <span>Gross Yield : {items?.grossYield}%</span>{" "}
                                 <img
                                   src="assets/img/properties/arrow_circle_up.png"
                                   alt=""
                                 />
                               </div>
-                              <button className="common-btn w-100 mt-1">
+                              <div className="rental-percent">
+                                <span>
+                                  Annual Return : {items?.annualReturn}%
+                                </span>{" "}
+                                <img
+                                  src="assets/img/properties/arrow_circle_up.png"
+                                  alt=""
+                                />
+                              </div>
+                              {/* <button className="common-btn w-100 mt-1">
                                 Show interest
-                              </button>
+                              </button> */}
                             </div>
                           </>
                         </div>
                       );
                     })}
+                  {checkForCount == 0 && (
+                    <div className="properties-inner-box admin-property ms-0">
+                      <IphoneSpinner />
+                    </div>
+                  )}
+                  {checkForCount == 2 && (
+                    <div className="properties-inner-box admin-property ms-0 d-flex justify-content-center">
+                      <p className="text-center">No Data Found</p>
+                    </div>
+                  )}
 
                   <div className="mt-3 text-center">
                     {showDataAll?.length > 0 && (
@@ -347,6 +379,7 @@ export const ManagePropertyListing = () => {
             </Row>
           </Container>
         </section>
+
       </Layout>
     </>
   );

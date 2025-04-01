@@ -11,11 +11,13 @@ import {
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store/reducers/authReducer";
+import useAuth from "../hooks/useAuth";
 
 export default function Header() {
   const dispatch = useDispatch();
-
+const {user} = useAuth()
   return (
+    
     <>
       <header className="main-header login-header-home">
         <Navbar expand="lg" sticky="top">
@@ -61,12 +63,15 @@ export default function Header() {
                     </Nav>
                   </Navbar.Collapse>
 
-                  <Link to="/" className="ms-auto profile-dropdown">
-                    <img src="assets/img/logo.png" />
+                  <Link className="ms-auto profile-dropdown">
+                    <img src={user?.image ? user?.image : "assets/img/logo.png"} />
                   </Link>
-                  <Link to="/" className="border-btn">
+                  <Link  className="ms-auto profile-dropdown">
+               {user?.firstName}
+                  </Link>
+                  {/* <Link to="/" className="border-btn">
                     Logout <i className="fa fa-sign-out ms-2"></i>
-                  </Link>
+                  </Link> */}
                   <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 </div>
               </Col>

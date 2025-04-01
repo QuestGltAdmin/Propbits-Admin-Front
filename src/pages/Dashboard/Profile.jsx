@@ -150,8 +150,12 @@ const Profile = () => {
             profileFile: "",
             profileUrl: "",
           });
+          
           const array = { ...updateData?.data?.data, token: user?.token };
           dispatch(userloginSuccess(array));
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
         }
       } catch (err) {
         setDisableProfile(false);
