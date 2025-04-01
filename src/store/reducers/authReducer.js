@@ -17,8 +17,8 @@ const authSlice = createSlice({
     errorMsg: "",
     modelState: false,
     purposeFilter: !!purposeFilter ? purposeFilter : "",
-    filterObj : {},
-    resetFilter : 1
+    filterObj: {},
+    resetFilter: 1,
   },
 
   reducers: {
@@ -69,11 +69,8 @@ const authSlice = createSlice({
     },
 
     logout: (state) => {
-     const temp =  localStorage.getItem("purposeFilter");
-     const selectedCurrency =  localStorage.getItem("selectedCurrency");
       localStorage.clear();
-     temp && localStorage.setItem("purposeFilter", temp);
-     selectedCurrency && localStorage.setItem("selectedCurrency", selectedCurrency);
+
       return {
         ...state,
         isLoading: false,
@@ -92,7 +89,6 @@ const authSlice = createSlice({
     },
 
     purposeFilterObj: (state, action) => {
-     
       localStorage.setItem("purposeFilter", action.payload);
       return {
         ...state,
@@ -100,18 +96,18 @@ const authSlice = createSlice({
       };
     },
 
-    filterListing : (state , action) => {
+    filterListing: (state, action) => {
       return {
         ...state,
         filterObj: action.payload,
       };
     },
-    setReset : (state , action) => {
+    setReset: (state, action) => {
       return {
         ...state,
         resetFilter: action.payload,
       };
-    }
+    },
   },
 });
 
@@ -125,7 +121,7 @@ export const {
   modelOpen,
   purposeFilterObj,
   filterListing,
-  setReset
+  setReset,
 } = authSlice.actions;
 
 export default authSlice.reducer;

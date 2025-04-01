@@ -4,6 +4,8 @@ import Layout from "../../component/Layout";
 import toast from "react-hot-toast";
 import axiosMain from "../../http/axios/axios_main";
 import useAuth from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { userloginSuccess } from "../../store/reducers/authReducer";
 
 const Profile = () => {
   var loadFile = function (event) {
@@ -12,6 +14,7 @@ const Profile = () => {
   };
 
   const { user } = useAuth();
+  const dispatch = useDispatch()
   console.log("user", user);
 
   const [updatePass, setUpdatePass] = useState({
@@ -29,10 +32,51 @@ const Profile = () => {
   const [profileUpdate, setProfileUpdate] = useState({
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
+    userProfile: user?.image || "",
+  });
+  let profileFormData = new FormData();
+  const [disableProfile, setDisableProfile] = useState(false);
+  const [errorProfile, setErrorProfile] = useState("");
+  const [imageData, setImageData] = useState({
+    profileFile: "",
+    profileUrl: "",
   });
 
   const HandlePass = (e) => {
     setUpdatePass({ ...updatePass, [e.target.name]: e.target.value });
+  };
+  const photoUploadHandler = (event, setState) => {
+    const { files } = event.target;
+    if (files[0]) {
+      const maxSize = 2 * 1024 * 1024; // 2 MB in bytes
+
+      if (files[0].size > maxSize) {
+        toast.error("File size must be less than 2 MB.");
+        return;
+      }
+
+      if (files[0].type.includes("image")) {
+        const filename = files[0].name;
+        const fileExtension = filename.substr(filename.lastIndexOf(".") + 1);
+        if (
+          fileExtension.toLowerCase() === "png" ||
+          fileExtension.toLowerCase() === "jpg" ||
+          fileExtension.toLowerCase() === "gif" ||
+          fileExtension.toLowerCase() === "jpeg"
+        ) {
+          setState({
+            ...imageData,
+            profileFile: event.currentTarget.files[0],
+            profileUrl: URL.createObjectURL(files[0]),
+          });
+        } else {
+          toast.error("Invalid file format");
+        }
+      } else {
+        toast.error("Invalid file format");
+      }
+      event.target.value = "";
+    }
   };
 
   const updatePassData = async () => {
@@ -75,6 +119,47 @@ const Profile = () => {
     }
   };
 
+  const updateProfile = async () => {
+    if (!profileUpdate?.firstName) {
+      setErrorProfile("Please enter your first name");
+    } else if (!profileUpdate?.lastName) {
+      setErrorProfile("Please enter your last name");
+    } else {
+      setErrorProfile("");
+      setDisableProfile(true);
+      profileFormData.append("firstName", profileUpdate?.firstName);
+      profileFormData.append("lastName", profileUpdate?.lastName);
+      profileFormData.append("profile", imageData?.profileFile);
+      try {
+        const updateData = await axiosMain.post(
+          "/admin/profile",
+          profileFormData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+              authorization: `bearer ${user?.token}`,
+            },
+          }
+        );
+        console.log(updateData);
+
+        if (updateData?.data?.status) {
+          toast.success("Profile data updated successfully");
+          setDisableProfile(false);
+          setImageData({
+            profileFile: "",
+            profileUrl: "",
+          });
+          const array = { ...updateData?.data?.data, token: user?.token };
+          dispatch(userloginSuccess(array));
+        }
+      } catch (err) {
+        setDisableProfile(false);
+        toast.error(err?.response?.data?.message);
+      }
+    }
+  };
+
   return (
     <>
       <Layout>
@@ -93,13 +178,22 @@ const Profile = () => {
                               <span class="glyphicon glyphicon-camera"></span>
                               <span>Change Image</span>
                             </label>
-                            <input
-                              id="file"
+                            <Form.Control
                               type="file"
-                              onchange="loadFile(event)"
+                              placeholder=""
+                              onChange={(e) => {
+                                photoUploadHandler(e, setImageData);
+                              }}
+                              ondragover="drag()"
+                              ondrop="drop()"
+                              id="uploadFile"
                             />
                             <img
-                              src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg"
+                              src={
+                                imageData?.profileUrl ||
+                                profileUpdate?.userProfile ||
+                                "https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg"
+                              }
                               id="output"
                               width="200"
                             />
@@ -150,9 +244,17 @@ const Profile = () => {
                               </Form.Group>
                             </Col>
                           </Row>
-
+                          <p>{errorProfile}</p>
                           <div>
-                            <button className="common-btn  m-0">Submit</button>
+                            <button
+                              className="common-btn  m-0"
+                              onClick={() => {
+                                updateProfile();
+                              }}
+                              disabled={disableProfile}
+                            >
+                              {disableProfile ? "Please wait..." : "Submit"}
+                            </button>
                           </div>
                         </Col>
                       </Row>

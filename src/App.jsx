@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Properties from "./pages/Dashboard/Properties";
 import Profile from "./pages/Dashboard/Profile";
 import { ManagePropertyListing } from "./pages/Dashboard/ManagePropertyListing";
+import AdminPrivateRoute from "./PrivateRoute/AdminPrivateRoute";
 
 function App() {
   return (
@@ -18,11 +19,38 @@ function App() {
           {/* <Route path="/" element={<HomePage />} /> */}
           <Route path="/" element={<Login />} />
           <Route path="/verify-otp" element={<Verify />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/properties" element={<Properties />} />
-          <Route path="/Profile" element={<Profile />} />
-          <Route path="/manage-property-listing" element={<ManagePropertyListing />} />
-          
+          <Route
+            path="/dashboard"
+            element={
+              <AdminPrivateRoute>
+                <Dashboard />
+              </AdminPrivateRoute>
+            }
+          />
+          <Route
+            path="/properties"
+            element={
+              <AdminPrivateRoute>
+                <Properties />
+              </AdminPrivateRoute>
+            }
+          />
+          <Route
+            path="/Profile"
+            element={
+              <AdminPrivateRoute>
+                <Profile />
+              </AdminPrivateRoute>
+            }
+          />
+          <Route
+            path="/manage-property-listing"
+            element={
+              <AdminPrivateRoute>
+                <ManagePropertyListing />
+              </AdminPrivateRoute>
+            }
+          />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

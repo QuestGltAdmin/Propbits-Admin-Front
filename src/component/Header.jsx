@@ -8,9 +8,13 @@ import {
   Row,
   NavDropdown,
 } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../store/reducers/authReducer";
 
 export default function Header() {
+  const dispatch = useDispatch();
+
   return (
     <>
       <header className="main-header login-header-home">
@@ -25,14 +29,14 @@ export default function Header() {
 
                   <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                      <Nav.Link href="/Dashboard">
+                      <Nav.Link as={Link} to="/Dashboard">
                         <i className="fa fa-th-large"></i> Dashboard
                       </Nav.Link>
-                    
-                      <Nav.Link href="/Transactions">
+
+                      <Nav.Link as={Link} to="/manage-property-listing">
                         <i className="fa fa-exchange"></i> Properties
                       </Nav.Link>
-                      <Nav.Link href="/Profile">
+                      <Nav.Link as={Link} to="/Profile">
                         <i className="fa fa-user"></i> Profile
                       </Nav.Link>
                       {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -47,7 +51,11 @@ export default function Header() {
                                         </NavDropdown.Item>
                                         </NavDropdown> */}
 
-                      <Nav.Link href="/">
+                      <Nav.Link
+                        onClick={() => {
+                          dispatch(logout({}));
+                        }}
+                      >
                         <i className="fa fa-sign-out"></i> Logout
                       </Nav.Link>
                     </Nav>
