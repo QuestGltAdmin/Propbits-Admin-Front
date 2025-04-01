@@ -18,6 +18,7 @@ import Layout from "../../component/Layout";
 import { useSearchParams } from "react-router-dom";
 import axiosMain from "../../http/axios/axios_main";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const ProductDetail = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,6 +28,16 @@ const ProductDetail = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const mainSlider = useRef(null); // Reference for the main image slider
   const [imageArray, setImageArray] = useState([]);
+  const [modelForReject, setModelForReject] = useState(true);
+  const [modelForApprove, setModelForApprove] = useState(true);
+  const [inputReason, setInputReason] = useState("");
+  const [disable, setDisable] = useState(false);
+  const HandleCloseReject = () => {
+    setModelForReject(false);
+  };
+  const HandleCloseApprove = () => {
+    setModelForApprove(false);
+  };
   const mainSliderSettings = {
     dots: false,
     infinite: true,
@@ -104,11 +115,61 @@ const ProductDetail = () => {
         },
       });
       if (getData?.data?.status) {
-        console.log("getData" , getData);
-        
+        console.log("getData", getData);
+
         setShowData(getData?.data?.data);
       }
     } catch (err) {}
+  };
+
+  const rejectProperty = async () => {
+    if (!inputReason) {
+      toast.error("Please enter the reason for reject");
+    } else {
+      setDisable(true);
+      try {
+        const payload = {
+          propertyId: id,
+          rejectReason: inputReason,
+        };
+        const submitData = await axiosMain?.post("/property/reject", payload, {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `bearer ${user?.token}`,
+          },
+        });
+        if (submitData?.data?.status) {
+          setDisable(false);
+          toast?.success("Property rejected successfully");
+          HandleCloseReject();
+        }
+      } catch (err) {
+        setDisable(false);
+        toast.error(err?.response?.data?.message);
+      }
+    }
+  };
+  const approveProperty = async () => {
+    setDisable(true);
+    try {
+      const payload = {
+        propertyId: id,
+      };
+      const submitData = await axiosMain?.post("/property/approve", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${user?.token}`,
+        },
+      });
+      if (submitData?.data?.status) {
+        setDisable(false);
+        toast?.success("Property approved successfully");
+        HandleCloseApprove();
+      }
+    } catch (err) {
+      setDisable(false);
+      toast.error(err?.response?.data?.message);
+    }
   };
   return (
     <>
@@ -481,6 +542,102 @@ const ProductDetail = () => {
                   </div>
                 ))}
               </Slider>
+            </div>
+          </Modal.Body>
+        </Modal>
+
+        <Modal
+          show={modelForReject}
+          onHide={HandleCloseReject}
+          backdrop="static"
+          keyboard={false}
+          size="md"
+          centered
+          className="common-listing-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="text-center">
+              <Row className="justify-content-center">
+                <Col lg="9">
+                  <div className="property-profile-sec">
+                    <Form.Group>
+                      <Form.Label>Enter the reason</Form.Label>
+                      <Form.Control
+                        type="text"
+                        onChange={(e) => {
+                          setInputReason(e?.target?.value);
+                        }}
+                        value={inputReason}
+                      />
+                    </Form.Group>
+                  </div>
+                </Col>
+                <Col lg={9}>
+                  <div className="d-flex justify-content-center gap-2">
+                    <button
+                      className="common-btn "
+                      onClick={() => {
+                        HandleCloseReject();
+                      }}
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      className="common-btn "
+                      onClick={() => {
+                        rejectProperty();
+                      }}
+                    >
+                      {disable ? "Please wait..." : "Reject"}
+                    </button>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </Modal.Body>
+        </Modal>
+        <Modal
+          show={modelForApprove}
+          onHide={HandleCloseApprove}
+          backdrop="static"
+          keyboard={false}
+          size="md"
+          centered
+          className="common-listing-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="text-center">
+              <Row className="justify-content-center">
+                <p>Are you sure you want to approve this property</p>
+                <Col lg={9}>
+                  <div className="d-flex justify-content-center gap-2">
+                    <button
+                      className="common-btn "
+                      onClick={() => {
+                        HandleCloseApprove();
+                      }}
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      className="common-btn "
+                      onClick={() => {
+                        approveProperty();
+                      }}
+                    >
+                      {disable ? "Please wait..." : "Approve"}
+                    </button>
+                  </div>
+                </Col>
+              </Row>
             </div>
           </Modal.Body>
         </Modal>
