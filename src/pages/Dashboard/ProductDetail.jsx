@@ -230,7 +230,7 @@ const ProductDetail = () => {
 
         <div>
           <Container>
-            <div className="interest-strip">
+            <div className="interest-strip p-0">
               <Row>
                 <Col md="8" xs="6">
                   <ul className="interest-images">
@@ -268,38 +268,8 @@ const ProductDetail = () => {
                 </Col>
                 <Col md="4" xs="6">
                   <div>
-                    <div className="property-share-icons">
-                      <a
-
-                      // target="_blank"
-                      // href={`tel:+${showAgentDetails?.country_code}${showAgentDetails?.mobile_no}`}
-                      >
-                        <img
-                          src="/assets/img/properties/phone.png"
-                          className="img-fluid"
-                          alt="phone"
-                        />
-                      </a>
-                      <a>
-                        <img
-                          src="/assets/img/properties/whatsapp.png"
-                          className="img-fluid"
-                          alt="phone"
-                        />
-                      </a>
-                      <a
-
-                      // target="_blank"
-                      // href={`mailto:${showAgentDetails?.email}`}
-                      >
-                        <img
-                          src="/assets/img/properties/mail.png"
-                          className="img-fluid"
-                          alt="phone"
-                        />
-                      </a>
-                    </div>
-                    <button className="common-btn w-100">Book a viewing</button>
+                     <button className="common-btn bg-green w-100">Approve</button>
+                    <button className="common-btn bg-red w-100">Reject</button>
                   </div>
                 </Col>
               </Row>
@@ -600,6 +570,8 @@ const ProductDetail = () => {
             </div>
           </Modal.Body>
         </Modal>
+
+       
         <Modal
           show={modelForApprove}
           onHide={HandleCloseApprove}

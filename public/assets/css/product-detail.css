@@ -936,7 +936,14 @@ border: none !important;
   border: 2px solid rgba(38, 151, 255, 1);
   color: rgba(38, 151, 255, 1);
 }
-
+.common-btn.bg-green {
+  background-color: #128f12 !important;
+  border: 2px solid #128f12 !important;
+}
+.common-btn.bg-red {
+  background-color: #ea3a3a !important;
+  border: 2px solid #ea3a3a !important;
+}
 
 
 
