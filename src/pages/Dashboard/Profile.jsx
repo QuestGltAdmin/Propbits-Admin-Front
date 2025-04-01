@@ -174,9 +174,8 @@ const Profile = () => {
                       <Row>
                         <Col lg={4}>
                           <div class="profile-pic">
-                            <label class="-label" for="file">
-                              <span class="glyphicon glyphicon-camera"></span>
-                              <span>Change Image</span>
+                            <label class="label" for="file">
+                              <span class="fa fa-camera"></span>
                             </label>
                             <Form.Control
                               type="file"

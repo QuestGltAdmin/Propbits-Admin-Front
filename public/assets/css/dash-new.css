@@ -585,46 +585,62 @@ margin: 0;
 
 
 .profile-pic {
-  color: transparent;
-  transition: all 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  transition: all 0.3s ease;
+    color: transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+    max-width: max-content;
+    margin: auto;
+    border: 1px solid #000;
+    border-radius: 50%;
 }
 .profile-pic input {
-  display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    visibility: visible;
+    z-index: 2;
+    opacity: 0;
 }
 .profile-pic img {
-  position: absolute;
-  object-fit: cover;
-  width: 165px;
-  height: 165px;
-  box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.35);
-  border-radius: 100px;
-  z-index: 0;
+    position: static;
+    object-fit: cover;
+    width: 165px;
+    height: 165px;
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.35);
+    border-radius: 100px;
+    z-index: 0;
 }
-.profile-pic .-label {
-  cursor: pointer;
-  height: 165px;
-  width: 165px;
-}
-.profile-pic:hover .-label {
-  display: flex;
+.profile-pic .label {
+    cursor: pointer;
+    height: 165px;
+    width: 165px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 10000;
-  color: #fafafa;
   transition: background-color 0.2s ease-in-out;
   border-radius: 100px;
   margin-bottom: 0;
 }
+.profile-pic:hover .label {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fafafa;
+}
 .profile-pic span {
-  display: inline-flex;
-  padding: 0.2em;
-  height: 2em;
+    display: inline-flex;
+    padding: 0.2em;
+    height: auto;
 }
 .chart-box{
 

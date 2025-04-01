@@ -268,14 +268,15 @@ font-size: 0.9rem;
     color: #BEBEBE;
 }
 
-.properties-inner-box{
+.properties-inner-box {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
     border-radius: 0.8rem;
-border: 1.579px solid  #BEBEBE;
-box-shadow: 0px 0.79px 17.371px 0px rgba(0, 0, 0, 0.10);
-padding:0.6rem;
+    /* border: 1.579px solid  #BEBEBE; */
+    /* box-shadow: 0px 0.79px 17.371px 0px rgba(0, 0, 0, 0.10); */
+    padding: 0.6rem;
+    background-color: #fff;
 }
 .properties-inner-box .inner-property {
     display: flex;
