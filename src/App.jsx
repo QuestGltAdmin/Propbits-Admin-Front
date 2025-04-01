@@ -22,33 +22,33 @@ function App() {
           <Route
             path="/dashboard"
             element={
-              <AdminPrivateRoute>
+              // <AdminPrivateRoute>
                 <Dashboard />
-              </AdminPrivateRoute>
+              // </AdminPrivateRoute>
             }
           />
           <Route
             path="/properties"
             element={
-              <AdminPrivateRoute>
+              // <AdminPrivateRoute>
                 <Properties />
-              </AdminPrivateRoute>
+              // </AdminPrivateRoute>
             }
           />
           <Route
             path="/Profile"
             element={
-              <AdminPrivateRoute>
+              // <AdminPrivateRoute>
                 <Profile />
-              </AdminPrivateRoute>
+              // </AdminPrivateRoute>
             }
           />
           <Route
             path="/manage-property-listing"
             element={
-              <AdminPrivateRoute>
+              // <AdminPrivateRoute>
                 <ManagePropertyListing />
-              </AdminPrivateRoute>
+              // </AdminPrivateRoute>
             }
           />
         </Routes>
