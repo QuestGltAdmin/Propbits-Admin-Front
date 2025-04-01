@@ -1,0 +1,395 @@
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Button,
+  Col,
+  Container,
+  Dropdown,
+  Form,
+  InputGroup,
+  Modal,
+  Row,
+  Tab,
+  Table,
+  Tabs,
+} from "react-bootstrap";
+import "react-range-slider-input/dist/style.css";
+import Slider from "react-slick";
+import Layout from "../../component/Layout";
+
+
+
+const ProductDetail = () => {
+ 
+  return (
+  <>
+    
+      <Layout>
+        <div className="product-banner">
+          <Container>
+            <Row>
+              <Col md="12">
+                <div className="text-end">
+                  <p className="location-para">
+                    <img
+                      src="/assets/img/product/location.png"
+                      className="img-fluid"
+                      alt="location"
+                    />
+                    12 palm jumerha Dubai 
+                    </p>
+                </div>
+              </Col>
+            </Row>
+            <Row className="mt-3 product-banner-images">
+              <Col sm="8" className="d-flex align-items-stretch">
+                <div className="first-image w-100">
+                  <p>
+                  47,460,400 INR
+                  </p>
+                  <img
+                    src="assets/img/product/product-banner1.png"
+                    className="img-fluid"
+                   
+                  />
+                </div>
+              </Col>
+              <Col sm="4" className="d-flex align-items-stretch">
+                <div className="w-100">
+                  <Row>
+                    <Col md="12" sm="12" xs="6">
+                      <div className="second-image">
+                        <img
+                          src="assets/img/product/product-banner2.png"
+                          className="img-fluid"
+                          alt=""
+                          
+                        />
+                      </div>
+                    </Col>
+                    <Col md="12" sm="12" xs="6">
+                      <div className="third-image">
+                        <img
+                          src="assets/img/product/product-banner3.png"
+                          className="img-fluid"
+                          alt=""
+                         
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+
+        <div>
+          <Container>
+            <div className="interest-strip">
+              <Row>
+                <Col md="8" xs="6">
+                  <ul className="interest-images">
+                    <li>
+                      <div>
+                        <img
+                          src="/assets/img/product/interest1.png"
+                          className="img-fluid"
+                          alt="user"
+                        />
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <img
+                          src="/assets/img/product/interest2.png"
+                          className="img-fluid"
+                          alt="user"
+                        />
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <img
+                          src="/assets/img/product/interest3.png"
+                          className="img-fluid"
+                          alt="user"
+                        />
+                      </div>
+                    </li>
+                    <li>
+                      <div>+2</div>
+                    </li>
+                  </ul>
+                </Col>
+                <Col md="4" xs="6">
+                  <div>
+                    <div className="property-share-icons">
+                      <a
+                       
+                      // target="_blank"
+                      // href={`tel:+${showAgentDetails?.country_code}${showAgentDetails?.mobile_no}`}
+                      >
+                        <img
+                          src="/assets/img/properties/phone.png"
+                          className="img-fluid"
+                          alt="phone"
+                        />
+                      </a>
+                      <a
+                       
+                      >
+                        <img
+                          src="/assets/img/properties/whatsapp.png"
+                          className="img-fluid"
+                          alt="phone"
+                        />
+                      </a>
+                      <a
+                        
+                      // target="_blank"
+                      // href={`mailto:${showAgentDetails?.email}`}
+                      >
+                        <img
+                          src="/assets/img/properties/mail.png"
+                          className="img-fluid"
+                          alt="phone"
+                        />
+                      </a>
+                    </div>
+                    <button
+                      className="common-btn w-100"
+                     
+                    >
+                      Book a viewing
+                    </button>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+            {/* <div className="interest-strip">
+              <Row className="align-items-center ">
+                <Col lg="5" md="5" sm="7">
+                  <div className="agent-box mb-0">
+                    <div className="agent-name">
+                      <img src="/assets/img/properties/property-profile.png" className="img-fluid" alt="profile" />
+                      <div className="text-start">
+                        <h3>Morgan thomas</h3>
+                        <p>Selected</p>
+                      </div>
+                    </div>
+                    <div className="agent-icons">
+                      <a>
+                        <img src="/assets/img/properties/phone.png" className="img-fluid" alt="phone" />
+                      </a>
+                      <a>
+                        <img src="/assets/img/properties/whatsapp.png" className="img-fluid" alt="phone" />
+                      </a>
+                      <a>
+                        <img src="/assets/img/properties/mail.png" className="img-fluid" alt="phone" />
+                      </a>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg="3" md="4" sm="5">
+                  <div className="agent-box mb-0">
+                    <div className="agent-name">
+                      <img src="/assets/img/properties/property-profile.png" className="img-fluid" alt="profile" />
+                      <div className="text-start">
+                        <p>Wednesday, 10th Jan</p>
+                        <p>11:00 AM</p>
+                      </div>
+                    </div>
+                    <div>
+                      <a href="" className="edit-btn">Edit</a>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg="2" md="3" className="offset-lg-2">
+                  <div>
+                    <button
+                      className="border-btn w-100"
+
+                    >
+                      Scheduled
+                    </button>
+                  </div>
+                </Col>
+              </Row>
+            </div> */}
+            <div>
+              <Row>
+                <Col md="8">
+                  <div className="">
+                    <ul className="room-specify">
+                      <li>
+                        <p className="light-color">
+                          <img
+                            src="/assets/img/product/apartment.svg"
+                            className="img-fluid"
+                            alt="bedroom"
+                          />
+                          Property Type
+                        </p>
+                        <p className="dark-color">lorem ipsum new changes</p>
+                      </li>
+                      <li>
+                        <p className="light-color">
+                          <img
+                            src="/assets/img/product/bed.svg"
+                            className="img-fluid"
+                            alt="bedroom"
+                          />
+                          Bedroom
+                        </p>
+                        <p className="dark-color">lorem ipsum new changes</p>
+                      </li>
+                      <li>
+                        <p className="light-color">
+                          <img
+                            src="/assets/img/product/bathroom.svg"
+                            className="img-fluid"
+                            alt="bedroom"
+                          />
+                          Bathroom
+                        </p>
+                        <p className="dark-color">lorem ipsum new changes</p>
+                      </li>
+                      <li>
+                        <p className="light-color">
+                          <img
+                            src="/assets/img/product/calendar.svg"
+                            className="img-fluid"
+                            alt="bedroom"
+                          />
+                          Available from
+                        </p>
+                        <p className="dark-color">
+                        lorem ipsum new changes
+                        </p>
+                      </li>
+                      <li>
+                        <p className="light-color">
+                          <img
+                            src="/assets/img/product/sqft.svg"
+                            className="img-fluid"
+                            alt="bedroom"
+                          />
+                          sqft
+                        </p>
+                        <p className="dark-color">
+                        lorem ipsum new changes
+                        </p>
+                      </li>
+                     
+                        <li>
+                          <p className="light-color">
+                            <img
+                              src="/assets/img/product/rental.png"
+                              className="img-fluid"
+                              alt="bedroom"
+                            />
+                            Rental Yield
+                          </p>
+                          <p className="dark-color">
+                             30%
+                          </p>
+                        </li>
+                      
+                      <li>
+                        <p className="light-color">
+                          <img
+                            src="/assets/img/product/pricesqft.png"
+                            className="img-fluid"
+                            alt="bedroom"
+                          />
+                          225/Sq.ft
+                        </p>
+                        <p className="dark-color">
+                        lorem ipsum new changes
+                        </p>
+                      </li>
+                     
+                        <li>
+                          <p className="light-color">
+                            <img
+                              src="/assets/img/product/capital.png"
+                              className="img-fluid"
+                              alt="bedroom"
+                            />
+                            Capital Appreciation
+                          </p>
+                          <p className="dark-color m-2">
+                            
+                            40%
+                          </p>
+                        </li>
+                     
+                    </ul>
+
+                    <ul className="breadcrumb view-sec">
+                      <li>
+                        <a href="#">Lorem ipsum text</a>
+                      </li>
+                      {/* <li>
+                        <a href="#">Luxury</a>
+                      </li>
+                      <li>
+                        <a href="#">New</a>
+                      </li> */}
+                    </ul>
+
+                    <div className="site-details">
+                    lorem ipsum new changes
+                    </div>
+
+                    <div className="amenities-sec">
+                      <h3 className="feature-head">Feature / Amenities</h3>
+                      <ul>
+                              <li>
+                                <div>
+                                  <img
+                                    src=""
+                                    className="img-fluid"
+                                    alt="feature"
+                                  />
+                                  <p>lorem ipsum new changes</p>
+                                </div>
+                              </li>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                </Col>
+                <Col md="4">
+                  <div className="map-box">
+                  <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7220.3424470099835!2d55.274348040869334!3d25.197447618821002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f682829c85c07%3A0xa5eda9fb3c93b69d!2sDubai%20Mall!5e0!3m2!1sen!2sin!4v1732095707860!5m2!1sen!2sin"
+                      width="600"
+                      height="450"
+                      style={{ border: 0 }}
+                      allowfullscreen=""
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                    
+                  </div>
+                  <div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        </div>
+
+       
+        
+
+     
+
+      
+      </Layout>
+    </>
+  );
+};
+
+export default ProductDetail;

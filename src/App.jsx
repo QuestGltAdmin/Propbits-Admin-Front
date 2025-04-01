@@ -9,6 +9,7 @@ import Properties from "./pages/Dashboard/Properties";
 import Profile from "./pages/Dashboard/Profile";
 import { ManagePropertyListing } from "./pages/Dashboard/ManagePropertyListing";
 import AdminPrivateRoute from "./PrivateRoute/AdminPrivateRoute";
+import ProductDetail from "./pages/Dashboard/ProductDetail";
 
 function App() {
   return (
@@ -48,6 +49,14 @@ function App() {
             element={
               // <AdminPrivateRoute>
                 <ManagePropertyListing />
+              // </AdminPrivateRoute>
+            }
+          />
+          <Route
+            path="/Property-details"
+            element={
+              // <AdminPrivateRoute>
+                <ProductDetail />
               // </AdminPrivateRoute>
             }
           />
