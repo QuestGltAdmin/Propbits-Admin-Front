@@ -23,7 +23,7 @@ import toast from "react-hot-toast";
 const ProductDetail = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [showImages, setShowImages] = useState(false);
   const [id, setId] = useState(searchParams.get("id") || "");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -144,7 +144,7 @@ const ProductDetail = () => {
           setDisable(false);
           toast?.success("Property rejected successfully");
           setTimeout(() => {
-            navigate("/manage-property-listing")
+            navigate("/manage-property-listing");
             HandleCloseReject();
           }, 3000);
         }
@@ -170,9 +170,8 @@ const ProductDetail = () => {
         setDisable(false);
         toast?.success("Property approved successfully");
         setTimeout(() => {
-          navigate("/manage-property-listing")
+          navigate("/manage-property-listing");
           HandleCloseApprove();
-
         }, 3000);
       }
     } catch (err) {
@@ -194,7 +193,7 @@ const ProductDetail = () => {
                       className="img-fluid"
                       alt="location"
                     />
-                    12 palm jumerha Dubai
+                    {showData?.address}
                   </p>
                 </div>
               </Col>
@@ -202,9 +201,16 @@ const ProductDetail = () => {
             <Row className="mt-3 product-banner-images">
               <Col sm="8" className="d-flex align-items-stretch">
                 <div className="first-image w-100">
-                  <p>47,460,400 INR</p>
+                  {/* <p>47,460,400 INR</p> */}
                   <img
-                    src="assets/img/product/product-banner1.png"
+                    onClick={() => {
+                      setImageArray(showData?.images);
+                      setShowImages(true);
+                    }}
+                    src={
+                      showData?.images ? showData?.images[0] :
+                      "assets/img/product/product-banner1.png"
+                    }
                     className="img-fluid"
                   />
                 </div>
@@ -215,7 +221,14 @@ const ProductDetail = () => {
                     <Col md="12" sm="12" xs="6">
                       <div className="second-image">
                         <img
-                          src="assets/img/product/product-banner2.png"
+                          onClick={() => {
+                            setImageArray(showData?.images);
+                            setShowImages(true);
+                          }}
+                          src={
+                            showData?.images ?  showData?.images[1] : 
+                            "assets/img/product/product-banner2.png"
+                          }
                           className="img-fluid"
                           alt=""
                         />
@@ -224,7 +237,14 @@ const ProductDetail = () => {
                     <Col md="12" sm="12" xs="6">
                       <div className="third-image">
                         <img
-                          src="assets/img/product/product-banner3.png"
+                          onClick={() => {
+                            setImageArray(showData?.images);
+                            setShowImages(true);
+                          }}
+                          src={
+                            showData?.images ? showData?.images[0] : 
+                            "assets/img/product/product-banner3.png"
+                          }
                           className="img-fluid"
                           alt=""
                         />
@@ -365,7 +385,7 @@ const ProductDetail = () => {
                           />
                           Property Type
                         </p>
-                        <p className="dark-color">lorem ipsum new changes</p>
+                        <p className="dark-color">{showData?.appartment}</p>
                       </li>
                       <li>
                         <p className="light-color">
@@ -376,9 +396,9 @@ const ProductDetail = () => {
                           />
                           Bedroom
                         </p>
-                        <p className="dark-color">lorem ipsum new changes</p>
+                        <p className="dark-color">{showData?.rooms}</p>
                       </li>
-                      <li>
+                      {/* <li>
                         <p className="light-color">
                           <img
                             src="/assets/img/product/bathroom.svg"
@@ -388,8 +408,8 @@ const ProductDetail = () => {
                           Bathroom
                         </p>
                         <p className="dark-color">lorem ipsum new changes</p>
-                      </li>
-                      <li>
+                      </li> */}
+                      {/* <li>
                         <p className="light-color">
                           <img
                             src="/assets/img/product/calendar.svg"
@@ -399,7 +419,7 @@ const ProductDetail = () => {
                           Available from
                         </p>
                         <p className="dark-color">lorem ipsum new changes</p>
-                      </li>
+                      </li> */}
                       <li>
                         <p className="light-color">
                           <img
@@ -409,7 +429,7 @@ const ProductDetail = () => {
                           />
                           sqft
                         </p>
-                        <p className="dark-color">lorem ipsum new changes</p>
+                        <p className="dark-color">{showData?.sizeInSqFeet}</p>
                       </li>
 
                       <li>
@@ -419,9 +439,9 @@ const ProductDetail = () => {
                             className="img-fluid"
                             alt="bedroom"
                           />
-                          Rental Yield
+                       Net Yield
                         </p>
-                        <p className="dark-color">30%</p>
+                        <p className="dark-color">{showData?.netYield}%</p>
                       </li>
 
                       <li>
@@ -431,9 +451,9 @@ const ProductDetail = () => {
                             className="img-fluid"
                             alt="bedroom"
                           />
-                          225/Sq.ft
+                Annual Return
                         </p>
-                        <p className="dark-color">lorem ipsum new changes</p>
+                        <p className="dark-color">{showData?.annualReturn}%</p>
                       </li>
 
                       <li>
@@ -443,15 +463,15 @@ const ProductDetail = () => {
                             className="img-fluid"
                             alt="bedroom"
                           />
-                          Capital Appreciation
+                    Gross Yield
                         </p>
-                        <p className="dark-color m-2">40%</p>
+                        <p className="dark-color m-2">{showData?.grossYield}%</p>
                       </li>
                     </ul>
 
                     <ul className="breadcrumb view-sec">
                       <li>
-                        <a href="#">Lorem ipsum text</a>
+                        <a href="#">{showData?.title}</a>
                       </li>
                       {/* <li>
                         <a href="#">Luxury</a>
@@ -461,17 +481,26 @@ const ProductDetail = () => {
                       </li> */}
                     </ul>
 
-                    <div className="site-details">lorem ipsum new changes</div>
+                    <div className="site-details">{showData?.description}</div>
 
                     <div className="amenities-sec">
                       <h3 className="feature-head">Feature / Amenities</h3>
                       <ul>
-                        <li>
-                          <div>
-                            <img src="" className="img-fluid" alt="feature" />
-                            <p>lorem ipsum new changes</p>
-                          </div>
-                        </li>
+                        {showData?.homeFacilites?.length > 0 &&
+                          showData?.homeFacilites?.map((items, index) => {
+                            return (
+                              <li>
+                                <div>
+                                  <img
+                                    src={items?.image}
+                                    className="img-fluid"
+                                    alt="feature"
+                                  />
+                                  <p>{items?.name}</p>
+                                </div>
+                              </li>
+                            );
+                          })}
                       </ul>
                     </div>
                   </div>
